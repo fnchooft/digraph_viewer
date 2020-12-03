@@ -9,7 +9,7 @@ register(G, Name) ->
 
 graph_data() ->
   Graphs = call_server({list}),
-  lists:map(fun({Uuid, G, Name}) -> 
+  lists:map(fun({Uuid, G, Name}) ->
     Id = uuid:uuid_to_string(Uuid, binary_standard),
     Info = digraph:info(G),
     Vertices = collect_vertices(G),
@@ -18,22 +18,25 @@ graph_data() ->
   end, Graphs).
 
 call_server(Request) ->
-   gen_server:call(graph_tracker, Request).   
-   
+   gen_server:call(graph_tracker, Request).
+
 collect_vertices(G) ->
   Vertices = digraph:vertices(G),
-  lists:map(fun(Id) -> 
+  lists:map(fun(Id) ->
+    {_Name,Labels} = digraph:vertex(G,Id),
     IdStr = format_term(Id),
-    {[{id, IdStr}]} end, Vertices).
+    LblStr = format_term(Labels),
+    {[{id, IdStr},{title,LblStr}]} end, Vertices).
 
 collect_edges(G) ->
   Edges = digraph:edges(G),
   lists:map(fun(E) ->
-    {E, Source, Target, B} = digraph:edge(G, E),
+    {E, Source, Target, Labels} = digraph:edge(G, E),
     Id = format_term(E),
     Src = format_term(Source),
     Trgt = format_term(Target),
-    {[{id, Id}, {source, Src}, {target, Trgt}]}
+    LblText = format_term(Labels),
+    {[{id, Id}, {source, Src}, {target, Trgt},{label,LblText}]}
   end, Edges).
 
 do_register(G, Name) ->
@@ -43,3 +46,4 @@ format_term(Term) ->
   R = io_lib:format("~p",[Term]),
   L = lists:flatten(R),
   iolist_to_binary(L).
+

@@ -6,7 +6,7 @@ start_server() ->
   ok = application:start(ranch),
   ok = application:start(cowlib),
   ok = application:start(cowboy),
-  
+
   Dispatch = cowboy_router:compile([
       {'_', [
         {"/", cowboy_static, {priv_file, digraph_viewer, "index.html"}},

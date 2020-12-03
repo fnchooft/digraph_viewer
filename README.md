@@ -37,14 +37,16 @@ Before the digraph can be viewed it must be registered with `digraph_viewer`.
 
 ```erlang
 %% erlang
-
-G = digraph:new(),
+application:start(digraph_viewer).
+G = digraph:new().
+digraph:add_vertex(G,friendA,[{age,42}]).
+digraph:add_vertex(G,friendB,[{age,30}]).
+digraph:add_edge(G,friendA,friendB,[{since,2014}]).
 digraph_viewer:register(G).
 ```
 
 ```elixir
 # elixir
-
 g = :digraph.new()
 :digraph_viewer.register(g)
 ```
