@@ -2,6 +2,8 @@
   display:none;
 }
 
+.vis-network: {overflow:visible;}
+
 .bg-light {
   background-color: #37474f;
 }
