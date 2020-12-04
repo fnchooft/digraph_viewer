@@ -2,9 +2,9 @@ name: Erlang CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master update_deps ]
   pull_request:
-    branches: [ master ]
+    branches: [ master update_deps ]
 
 jobs:
 
