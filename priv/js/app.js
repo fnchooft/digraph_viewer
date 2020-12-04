@@ -57,17 +57,24 @@
   }
   
   function renderGraph(graphData) {
+
     var vertices = graphData.vertices.map(function(v) {
-      return {id: v.id, label: v.id}
+      return {
+        id: v.id, 
+        label: v.id, 
+        title: v.title
+      }
     });
     
-    var edges = graphData.edges.map(function(v) {
+    var edges = graphData.edges.map(function(e) {
       return {
-        label: v.id,
-        from: v.source,
-        to: v.target,
+        id: e.id,
+        label: e.label,
+        from: e.source,
+        to: e.target,
         arrows:'to',
-        font: {align: 'horizontal'}}
+        font: {align: 'horizontal'}
+      }
     });
     
     var nodes = new vis.DataSet(vertices);
